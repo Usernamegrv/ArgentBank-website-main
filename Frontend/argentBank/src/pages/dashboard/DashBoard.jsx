@@ -4,7 +4,7 @@ import Header from "../../layout/header/Header.jsx";
 function DashBoard() {
   return (
     <div>
-      <Header />
+      <Header isDashboard={true} />
       <Footer />
     </div>
   );
