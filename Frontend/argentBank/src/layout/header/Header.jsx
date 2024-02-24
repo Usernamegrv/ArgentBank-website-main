@@ -20,11 +20,20 @@ function Header({ isDashboard }) {
         to="/login"
         style={({ isActive }) => (isActive ? activeStyle : undefined)}
       >
-        <div className="main-nav-item" href="./sign-in.html">
-          <FontAwesomeIcon icon={faUserCircle} />
-          <span>{isDashboard && <FontAwesomeIcon icon={faSignOutAlt} />}</span>
-
-          <span>{isDashboard ? "Sign Out" : "Sign In"}</span>
+        <div className="main-nav-item">
+          {isDashboard ? (
+            <>
+              <FontAwesomeIcon icon={faUserCircle} />
+              <span>Username</span>
+              <FontAwesomeIcon icon={faSignOutAlt} />
+              <span>Sign Out</span>
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={faUserCircle} />
+              <span>Sign In</span>
+            </>
+          )}
         </div>
       </NavLink>
     </nav>
