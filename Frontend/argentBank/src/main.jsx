@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducers/rootReducer";
+import rootReducer from "./redux/rootReducer.js";
 
 import App from "./App.jsx";
 import Login from "./pages/login/Login.jsx";
