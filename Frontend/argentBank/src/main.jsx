@@ -1,48 +1,30 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./App.css";
+
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./redux/rootReducer.js";
+import rootReducer from "./reducers";
+import { loginUser } from "./actions/post.action.js";
 
-import App from "./App.jsx";
-import Login from "./pages/login/Login.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DashBoard from "./pages/dashboard/DashBoard.jsx";
+// const initialState = {
+//     store: {
+//       token: null,
+//       user: null,
+//       error: false,
+//       loading: false,
+//     },
+//   };
 
-// Create the Redux store
 const store = configureStore({
   reducer: rootReducer,
+  devTools: true,
 });
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <Provider store={store}>
-        <App />
-      </Provider>
-    ),
-    errorElement: <h1>Error</h1>,
-  },
-  {
-    path: "/login",
-    element: (
-      <Provider store={store}>
-        <Login />
-      </Provider>
-    ),
-  },
-  {
-    path: "/dashboard",
-    element: (
-      <Provider store={store}>
-        <DashBoard />
-      </Provider>
-    ),
-  },
-]);
+store.dispatch(loginUser());
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

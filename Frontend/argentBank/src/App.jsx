@@ -1,17 +1,24 @@
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Header from "./layout/header/Header.jsx";
-import "./App.css";
-import Hero from "./components/hero/Hero.jsx";
-import ItemSection from "./components/itemSection/ItemSection.jsx";
+import Home from "./pages/home/Home.jsx";
+import Error from "./pages/error/Error.jsx";
+import Login from "./pages/login/Login.jsx";
+import Dashboard from "./pages/dashboard/DashBoard.jsx";
 import Footer from "./layout/footer/Footer.jsx";
+import "./App.css";
 
 function App() {
   return (
-    <div>
+    <HashRouter>
       <Header />
-      <Hero />
-      <ItemSection />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Error />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
       <Footer />
-    </div>
+    </HashRouter>
   );
 }
 

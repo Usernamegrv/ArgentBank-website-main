@@ -1,25 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import { postFormData } from "../../redux/utils/apiCalls.js";
-import { getUserProfil } from "../../redux/utils/apiCalls.js";
-import {
-  getEmail,
-  getPassword,
-  login,
-  getFirstName,
-  getLastName,
-} from "../../redux/actions.js";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 
 import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { loginUser } from "../../actions/post.action.js";
 
 const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const password = useSelector((state) => state.password);
-  const email = useSelector((state) => state.email);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleCheckBox = (e) => {
     if (e.target.checked === true) {
@@ -31,19 +24,9 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await postFormData(email, password);
 
-    if (response !== "error") {
-      const token = localStorage.getItem("token");
-      const userProfile = await getUserProfil(token);
-      if (userProfile !== "not found") {
-        dispatch(login());
-        dispatch(getFirstName(userProfile.firstName));
-        dispatch(getLastName(userProfile.lastName));
-        navigate("/DashBoard");
-      }
-    }
-    // dispatch(clearForm())
+    dispatch(loginUser(email, password));
+    navigate("/DashBoard");
   };
 
   return (
@@ -56,7 +39,8 @@ const Form = () => {
           <input
             type="text"
             id="username"
-            onChange={(e) => dispatch(getEmail(e.target.value))}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-wrapper">
@@ -64,9 +48,8 @@ const Form = () => {
           <input
             type="password"
             id="password"
-            onChange={(e) => {
-              dispatch(getPassword(e.target.value));
-            }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-remember">
