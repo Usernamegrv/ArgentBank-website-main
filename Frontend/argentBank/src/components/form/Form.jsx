@@ -1,18 +1,20 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import "./Form.css";
 
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { loginUser } from "../../actions/post.action.js";
+import { setEmail, setPassword } from "../../actions/user.action.js";
 
 const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const email = useSelector((state) => state.userReducer.email);
+  const password = useSelector((state) => state.userReducer.password);
 
   const handleCheckBox = (e) => {
     if (e.target.checked === true) {
@@ -26,8 +28,13 @@ const Form = () => {
     e.preventDefault();
 
     dispatch(loginUser(email, password));
+    // handleLoginSuccess();
     navigate("/DashBoard");
   };
+
+  // const handleLoginSuccess = (token) => {
+  //   dispatch(setToken(token));
+  // };
 
   return (
     <div className="sign-in-content">
@@ -40,7 +47,7 @@ const Form = () => {
             type="text"
             id="username"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => dispatch(setEmail(e.target.value))}
           />
         </div>
         <div className="input-wrapper">
@@ -49,7 +56,7 @@ const Form = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => dispatch(setPassword(e.target.value))}
           />
         </div>
         <div className="input-remember">

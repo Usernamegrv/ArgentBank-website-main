@@ -1,5 +1,6 @@
 export const SET_EMAIL = "SET_EMAIL";
 export const SET_PASSWORD = "SET_PASSWORD";
+export const SET_TOKEN = "SET_TOKEN";
 
 export const setEmail = (email) => {
   return {
@@ -14,3 +15,8 @@ export const setPassword = (password) => {
     payload: password,
   };
 };
+
+export const setToken = (token) => ({
+  type: SET_TOKEN,
+  payload: token,
+});
