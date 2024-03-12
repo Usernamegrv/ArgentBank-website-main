@@ -1,6 +1,7 @@
 export const SET_EMAIL = "SET_EMAIL";
 export const SET_PASSWORD = "SET_PASSWORD";
 export const SET_TOKEN = "SET_TOKEN";
+export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 
 export const setEmail = (email) => {
   return {
@@ -21,5 +22,12 @@ export const setToken = (token) => {
   return {
     type: SET_TOKEN,
     payload: token,
+  };
+};
+
+export const setAuthenticated = (isAuthenticated) => {
+  return {
+    type: SET_AUTHENTICATED,
+    payload: isAuthenticated,
   };
 };

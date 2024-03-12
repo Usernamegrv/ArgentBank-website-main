@@ -4,7 +4,7 @@ import { faUserCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function Header({ isDashboard }) {
+function Header({ isAuthenticated }) {
   let activeStyle = {
     textDecoration: "underline",
     color: "#42b983",
@@ -21,7 +21,7 @@ function Header({ isDashboard }) {
         style={({ isActive }) => (isActive ? activeStyle : undefined)}
       >
         <div className="main-nav-item">
-          {isDashboard ? (
+          {isAuthenticated ? (
             <>
               <FontAwesomeIcon icon={faUserCircle} />
               <span>Username</span>
@@ -40,7 +40,7 @@ function Header({ isDashboard }) {
   );
 }
 Header.propTypes = {
-  isDashboard: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default Header;

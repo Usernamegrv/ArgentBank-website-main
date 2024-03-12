@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setToken } from "./user.action.js";
+import { setToken, setAuthenticated } from "./user.action.js";
 export const LOGIN_USER = "LOGIN_USER";
 
 export const loginUser = (email, password) => {
@@ -11,6 +11,7 @@ export const loginUser = (email, password) => {
       });
       console.log("Response from loginUser action:", res);
       if (res.data.status === 200) {
+        dispatch(setAuthenticated(true));
         localStorage.setItem("token", res.data.body.token);
         dispatch(setToken(res.data.body.token));
         dispatch({ type: LOGIN_USER, payload: res.data });
