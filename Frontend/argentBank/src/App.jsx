@@ -6,27 +6,21 @@ import Login from "./pages/login/Login.jsx";
 import Dashboard from "./pages/dashboard/DashBoard.jsx";
 import Footer from "./layout/footer/Footer.jsx";
 import "./App.css";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 function App() {
-  const isAuthenticated = useSelector(
-    (state) => state.postReducer.isAuthenticated
-  );
+  // const isAuthenticated = useSelector(
+  //   (state) => state.postReducer.isAuthenticated
+  // );
 
   return (
     <HashRouter>
-      <Header isAuthenticated={isAuthenticated} />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Error />} />
-        <Route
-          path="/login"
-          element={<Login isAuthenticated={isAuthenticated} />}
-        />
-        <Route
-          path="/dashboard"
-          element={<Dashboard isAuthenticated={isAuthenticated} />}
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
     </HashRouter>

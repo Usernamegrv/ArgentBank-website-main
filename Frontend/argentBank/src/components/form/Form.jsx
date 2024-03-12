@@ -1,30 +1,22 @@
+import { useState } from "react";
 import "./Form.css";
 
-import { useDispatch, useSelector } from "react-redux";
+// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
-import { loginUser } from "../../actions/post.action.js";
-import { setEmail, setPassword } from "../../actions/user.action.js";
+import { login } from "../../reducers/userSlice.js";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const email = useSelector((state) => state.userReducer.email);
-  const password = useSelector((state) => state.userReducer.password);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(email, password));
-  };
-
-  const handleCheckBox = (e) => {
-    if (e.target.checked === true) {
-      localStorage.setItem("remember", "true");
-    } else {
-      localStorage.setItem("remember", "false");
-    }
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -38,7 +30,7 @@ const Form = () => {
             type="text"
             id="username"
             value={email}
-            onChange={(e) => dispatch(setEmail(e.target.value))}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-wrapper">
@@ -47,11 +39,11 @@ const Form = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e) => dispatch(setPassword(e.target.value))}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-remember">
-          <input type="checkbox" id="remember-me" onChange={handleCheckBox} />
+          <input type="checkbox" id="remember-me" />
           <label htmlFor="remember-me">Remember me</label>
         </div>
 
