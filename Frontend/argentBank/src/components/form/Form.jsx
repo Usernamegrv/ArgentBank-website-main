@@ -1,7 +1,7 @@
 import "./Form.css";
 
+// import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -11,10 +11,14 @@ import { setEmail, setPassword } from "../../actions/user.action.js";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const email = useSelector((state) => state.userReducer.email);
   const password = useSelector((state) => state.userReducer.password);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(loginUser(email, password));
+  };
 
   const handleCheckBox = (e) => {
     if (e.target.checked === true) {
@@ -23,18 +27,6 @@ const Form = () => {
       localStorage.setItem("remember", "false");
     }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    dispatch(loginUser(email, password));
-    // handleLoginSuccess();
-    navigate("/DashBoard");
-  };
-
-  // const handleLoginSuccess = (token) => {
-  //   dispatch(setToken(token));
-  // };
 
   return (
     <div className="sign-in-content">
