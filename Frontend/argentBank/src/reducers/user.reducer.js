@@ -1,7 +1,12 @@
 import { LOGIN_USER } from "../actions/post.action.js";
 import { SET_EMAIL, SET_PASSWORD, SET_TOKEN } from "../actions/user.action.js";
 
-const initialState = { user: null, email: "", password: "", token: null };
+const initialState = {
+  user: null,
+  email: "",
+  password: "",
+  token: null,
+};
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {

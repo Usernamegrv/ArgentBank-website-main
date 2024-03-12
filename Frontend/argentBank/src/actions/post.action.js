@@ -9,10 +9,10 @@ export const loginUser = (email, password) => {
         email,
         password,
       });
-      console.log(res);
+      console.log("Response from loginUser action:", res);
       if (res.data.status === 200) {
-        localStorage.setItem("token", res.data.token);
-        dispatch(setToken(res.data.token));
+        localStorage.setItem("token", res.data.body.token);
+        dispatch(setToken(res.data.body.token));
         dispatch({ type: LOGIN_USER, payload: res.data });
       } else {
         alert(res.data.message);
