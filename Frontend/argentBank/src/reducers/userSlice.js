@@ -1,10 +1,6 @@
-// import {create slice}
-// store
-// cretae async thunk
-
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { store } from "./store";
+
 import axios from "axios";
 
 const initialState = {
@@ -20,6 +16,23 @@ export const login = createAsyncThunk("userSlice/login", async (userData) => {
     userData
   );
   // console.log(data.body)
+  return data.body;
+});
+
+export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
+  const token = usersSlice.getInitialState().token;
+  console.log("test");
+  const { data } = await axios.post(
+    "http://localhost:3001/api/v1/user/profile",
+    { token },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log("data body:", data.body);
   return data.body;
 });
 
@@ -49,6 +62,11 @@ const usersSlice = createSlice({
       state.error = action.error.message;
       console.log(state.error);
       state.isLoggedIn = false;
+    });
+
+    builder.addCase(getProfile.fulfilled, (state, action) => {
+      state.currentUser = action.payload;
+      console.log(state.currentUser);
     });
   },
 });

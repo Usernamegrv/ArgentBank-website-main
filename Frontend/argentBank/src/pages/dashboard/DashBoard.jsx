@@ -1,8 +1,16 @@
 import CardTransaction from "../../components/cardTransaction/CardTransaction.jsx";
 
 import "./DashBoard.css";
+import { getProfile } from "../../reducers/userSlice.js";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function DashBoard() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
   return (
     <main className="main bg-dark">
       <div className="header">
