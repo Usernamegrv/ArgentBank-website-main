@@ -2,7 +2,8 @@ import CardTransaction from "../../components/cardTransaction/CardTransaction.js
 
 import "./DashBoard.css";
 import { getProfile } from "../../reducers/userSlice.js";
-import { useDispatch } from "react-redux";
+// import { updateProfile } from "../../reducers/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function DashBoard() {
@@ -11,13 +12,19 @@ function DashBoard() {
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
+
+  const currentUser = useSelector(
+    (state) => state.userReducer.currentUser.userName
+  );
+  console.log(currentUser);
+
   return (
     <main className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
           <br />
-          UserName!
+          <>{currentUser}</>
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>

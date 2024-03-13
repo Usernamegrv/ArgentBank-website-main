@@ -10,6 +10,11 @@ function Header() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
   const dispatch = useDispatch();
 
+  const currentUser = useSelector(
+    (state) => state.userReducer.currentUser.userName
+  );
+  console.log(currentUser);
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -33,7 +38,7 @@ function Header() {
           {isLoggedIn ? (
             <>
               <FontAwesomeIcon icon={faUserCircle} />
-              <span>Username</span>
+              <span>{currentUser}</span>
               <FontAwesomeIcon icon={faSignOutAlt} />
               <span onClick={handleLogout}>Sign Out</span>
             </>

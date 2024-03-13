@@ -7,6 +7,7 @@ const initialState = {
   token: sessionStorage.getItem("token") || null,
   isLoggedIn: sessionStorage.getItem("token") ? true : false,
   currentUser: {},
+  newUserName: "",
   error: null,
 };
 
@@ -15,7 +16,6 @@ export const login = createAsyncThunk("userSlice/login", async (userData) => {
     "http://localhost:3001/api/v1/user/login",
     userData
   );
-
   return data.body;
 });
 
@@ -35,6 +35,26 @@ export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
   // console.log("data body:", data.body);
   return data.body;
 });
+
+export const updateProfile = createAsyncThunk(
+  "userSlice/updateProfile",
+  async () => {
+    const token = usersSlice.getInitialState().token;
+    console.log("test");
+    const { data } = await axios.put(
+      "http://localhost:3001/api/v1/user/profile",
+      { token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("update profile", data.body);
+    return data.body;
+  }
+);
 
 const usersSlice = createSlice({
   name: "userSlice",
@@ -67,6 +87,11 @@ const usersSlice = createSlice({
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.currentUser = action.payload;
       console.log(state.currentUser);
+    });
+
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.newUserName = action.payload;
+      console.log(state.newUserName);
     });
   },
 });
