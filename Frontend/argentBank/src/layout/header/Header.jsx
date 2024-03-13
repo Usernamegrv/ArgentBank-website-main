@@ -3,8 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../reducers/userSlice.js";
 
-function Header({ isAuthenticated }) {
+function Header() {
+  const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   let activeStyle = {
     textDecoration: "underline",
     color: "#42b983",
@@ -21,12 +30,12 @@ function Header({ isAuthenticated }) {
         style={({ isActive }) => (isActive ? activeStyle : undefined)}
       >
         <div className="main-nav-item">
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <>
               <FontAwesomeIcon icon={faUserCircle} />
               <span>Username</span>
               <FontAwesomeIcon icon={faSignOutAlt} />
-              <span>Sign Out</span>
+              <span onClick={handleLogout}>Sign Out</span>
             </>
           ) : (
             <>
@@ -40,7 +49,7 @@ function Header({ isAuthenticated }) {
   );
 }
 Header.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default Header;

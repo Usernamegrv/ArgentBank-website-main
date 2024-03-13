@@ -15,13 +15,13 @@ export const login = createAsyncThunk("userSlice/login", async (userData) => {
     "http://localhost:3001/api/v1/user/login",
     userData
   );
-  // console.log(data.body)
+
   return data.body;
 });
 
 export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
   const token = usersSlice.getInitialState().token;
-  console.log("test");
+  // console.log("test");
   const { data } = await axios.post(
     "http://localhost:3001/api/v1/user/profile",
     { token },
@@ -32,7 +32,7 @@ export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
       },
     }
   );
-  console.log("data body:", data.body);
+  // console.log("data body:", data.body);
   return data.body;
 });
 
