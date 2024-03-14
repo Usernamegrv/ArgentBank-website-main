@@ -1,13 +1,17 @@
 import CardTransaction from "../../components/cardTransaction/CardTransaction.jsx";
 
-import "./DashBoard.css";
 import { getProfile } from "../../reducers/userSlice.js";
-// import { updateProfile } from "../../reducers/userSlice.js";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import Modal from "../../components/modal/Modal.jsx";
+
+import "./DashBoard.css";
 
 function DashBoard() {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(getProfile());
@@ -18,6 +22,14 @@ function DashBoard() {
   );
   console.log(currentUser);
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <main className="main bg-dark">
       <div className="header">
@@ -26,8 +38,11 @@ function DashBoard() {
           <br />
           <>{currentUser}</>
         </h1>
-        <button className="edit-button">Edit Name</button>
+        <button className="edit-button" onClick={openModal}>
+          Edit Name
+        </button>
       </div>
+      {showModal && <Modal closeModal={closeModal} />}
       <CardTransaction />
       <CardTransaction />
       <CardTransaction />

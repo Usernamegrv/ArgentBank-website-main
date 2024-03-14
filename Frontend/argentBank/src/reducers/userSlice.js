@@ -7,7 +7,6 @@ const initialState = {
   token: sessionStorage.getItem("token") || null,
   isLoggedIn: sessionStorage.getItem("token") ? true : false,
   currentUser: {},
-  newUserName: "",
   error: null,
 };
 
@@ -36,23 +35,26 @@ export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
   return data.body;
 });
 
-export const updateProfile = createAsyncThunk(
-  "userSlice/updateProfile",
-  async () => {
-    const token = usersSlice.getInitialState().token;
-    console.log("test");
-    const { data } = await axios.put(
-      "http://localhost:3001/api/v1/user/profile",
-      { token },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log("update profile", data.body);
-    return data.body;
+export const setUserName = createAsyncThunk(
+  "userSlice/setUserName",
+  async (newUserName, { getState }) => {
+    const token = getState().userReducer.token;
+    try {
+      const { data } = await axios.put(
+        "http://localhost:3001/api/v1/user/profile",
+        { userName: newUserName, token },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data.userName;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 );
 
@@ -88,10 +90,8 @@ const usersSlice = createSlice({
       state.currentUser = action.payload;
       console.log(state.currentUser);
     });
-
-    builder.addCase(updateProfile.fulfilled, (state, action) => {
-      state.newUserName = action.payload;
-      console.log(state.newUserName);
+    builder.addCase(setUserName.fulfilled, (state, action) => {
+      state.currentUser.userName = action.payload;
     });
   },
 });
