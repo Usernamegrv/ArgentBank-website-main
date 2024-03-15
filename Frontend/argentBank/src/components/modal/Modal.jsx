@@ -21,6 +21,11 @@ const Modal = ({ closeModal }) => {
     closeModal();
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    closeModal();
+  };
+
   const currentUser = useSelector(
     (state) => state.userReducer.currentUser.userName
   );
@@ -63,7 +68,7 @@ const Modal = ({ closeModal }) => {
             <button className="modal-button" type="submit">
               Save
             </button>
-            <button className="modal-button" onClick={closeModal}>
+            <button className="modal-button" onClick={handleCancel}>
               Cancel
             </button>
           </div>

@@ -88,7 +88,6 @@ const usersSlice = createSlice({
 
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.currentUser = action.payload;
-      console.log(state.currentUser);
     });
     builder.addCase(setUserName.fulfilled, (state, action) => {
       state.currentUser.userName = action.payload;

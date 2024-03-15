@@ -28,7 +28,7 @@ function DashBoard() {
 
   return (
     <main className="main bg-dark">
-      <div className="header">
+      <div className={`edit-section ${showModal ? "hidden" : ""}`}>
         <h1>
           Welcome back
           <br />
@@ -38,6 +38,7 @@ function DashBoard() {
           Edit Name
         </button>
       </div>
+
       {showModal && <Modal closeModal={closeModal} />}
       <CardTransaction />
       <CardTransaction />
