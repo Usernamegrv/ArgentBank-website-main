@@ -1,12 +1,8 @@
 import CardTransaction from "../../components/cardTransaction/CardTransaction.jsx";
-
 import { getProfile } from "../../reducers/userSlice.js";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-
 import Modal from "../../components/modal/Modal.jsx";
-
 import "./DashBoard.css";
 
 function DashBoard() {
@@ -15,7 +11,7 @@ function DashBoard() {
 
   useEffect(() => {
     dispatch(getProfile());
-  }, [dispatch]);
+  });
 
   const currentUser = useSelector(
     (state) => state.userReducer.currentUser.userName

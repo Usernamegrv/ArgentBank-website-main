@@ -28,21 +28,47 @@ const Modal = ({ closeModal }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
-        <h2>Edit user info</h2>
-        <input
-          type="text"
-          onChange={handleInputChange}
-          placeholder={currentUser}
-        />
-        <input type="text" placeholder="First name" readOnly disabled />
-        <input type="text" placeholder="Last name" readOnly disabled />
-      </div>
-
-      <div>
-        <button onClick={handleSubmit}>Save</button>
-        <button onClick={closeModal}>Cancel</button>
-      </div>
+      <h2>Edit user info</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-container">
+          <div className="input-group">
+            <label htmlFor="userName:">User name:</label>
+            <input
+              type="text"
+              onChange={handleInputChange}
+              placeholder={currentUser}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="firstName">First name:</label>
+            <input
+              className="input-disabled"
+              type="text"
+              placeholder="First name"
+              readOnly
+              disabled
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="lastName">Last name:</label>
+            <input
+              className="input-disabled"
+              type="text"
+              placeholder="Last name"
+              readOnly
+              disabled
+            />
+          </div>
+          <div className="modal-button-container">
+            <button className="modal-button" type="submit">
+              Save
+            </button>
+            <button className="modal-button" onClick={closeModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
