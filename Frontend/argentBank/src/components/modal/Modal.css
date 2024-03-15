@@ -24,7 +24,7 @@ h2 {
     gap: 10px;
     border-radius: 5px;
 }
-input {
+.modal input {
     width: 35%;
     margin-right: 10px;
     border-radius: 3px;
