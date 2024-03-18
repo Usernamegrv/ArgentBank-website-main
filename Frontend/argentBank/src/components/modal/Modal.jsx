@@ -26,10 +26,10 @@ const Modal = ({ closeModal }) => {
     closeModal();
   };
 
-  const currentUser = useSelector(
-    (state) => state.userReducer.currentUser.userName
-  );
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
   console.log(currentUser);
+
+  const { userName, firstName, lastName } = currentUser;
 
   return (
     <div className="modal">
@@ -41,7 +41,7 @@ const Modal = ({ closeModal }) => {
             <input
               type="text"
               onChange={handleInputChange}
-              placeholder={currentUser}
+              placeholder={userName}
             />
           </div>
           <div className="input-group">
@@ -49,7 +49,7 @@ const Modal = ({ closeModal }) => {
             <input
               className="input-disabled"
               type="text"
-              placeholder="First name"
+              placeholder={firstName}
               readOnly
               disabled
             />
@@ -59,7 +59,7 @@ const Modal = ({ closeModal }) => {
             <input
               className="input-disabled"
               type="text"
-              placeholder="Last name"
+              placeholder={lastName}
               readOnly
               disabled
             />
