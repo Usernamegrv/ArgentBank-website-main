@@ -1,14 +1,15 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
 paths:
+  # Endpoint pour la connexion d'un utilisateur
   /user/login:
     post:
       tags:
@@ -21,18 +22,19 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: "#/definitions/Login"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Login Successfully
           schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
+            $ref: "#/definitions/LoginResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
+  # Endpoint pour l'inscription d'un nouvel utilisateur
   /user/signup:
     post:
       tags:
@@ -45,18 +47,19 @@ paths:
           description: Signup Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
+  # Endpoint pour récupérer ou modifier le profil d'un utilisateur
   /user/profile:
     post:
       security:
@@ -65,16 +68,14 @@ paths:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
-      #produces:
-       # - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
     put:
       security:
@@ -89,23 +90,104 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: "#/definitions/UserProfile"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+  # Endpoint pour récupérer les transactions du mois en cours d'un utilisateur
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get Transactions
+      description: API to retrieve all transactions for the current month, grouped by account
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transactions retrieved successfully
+          schema:
+            $ref: "#/definitions/TransactionList"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+  # Endpoint pour récupérer les détails d'une transaction spécifique ou pour mettre à jour la catégorie et la note d'une transaction
+  /transactions/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get Transaction Details
+      description: API to retrieve details of a specific transaction
+      parameters:
+        - name: id
+          type: number
+          in: path
+          description: ID of the transaction to retrieve
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update Transaction
+      description: API to update category and note of a specific transaction
+      parameters:
+        - name: id
+          type: number
+          in: path
+          description: ID of the transaction to update
+          required: true
+        - in: body
+          name: body
+          description: Updated category and note of the transaction
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionReq"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction updated successfully
+          schema:
+            $ref: "#/definitions/BasicRes"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
 definitions:
   User:
     properties:
@@ -156,3 +238,38 @@ definitions:
     properties:
       userName:
         type: string
+  TransactionList:
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: number
+        description: transaction ID
+      date:
+        type: string
+        format: date
+        description: transaction date
+      description:
+        type: string
+        description: transaction description
+      amount:
+        type: number
+        description: transaction amount
+      balance:
+        type: number
+        description: transaction balance
+      type:
+        type: string
+        description: transaction type
+      category:
+        type: string
+        description: transaction category
+      note:
+        type: string
+        description: transaction note
