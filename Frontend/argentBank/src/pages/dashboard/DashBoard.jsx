@@ -1,4 +1,5 @@
 import CardTransaction from "../../components/cardTransaction/CardTransaction.jsx";
+
 import { getProfile } from "../../reducers/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,15 +10,16 @@ function DashBoard() {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    dispatch(getProfile());
-  });
+  const token = useSelector((state) => state.userReducer.token);
 
   const currentUser = useSelector(
     (state) => state.userReducer.currentUser.userName
   );
   console.log(currentUser);
 
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, [dispatch, token, currentUser]);
   const openModal = () => {
     setShowModal(true);
   };
@@ -40,9 +42,24 @@ function DashBoard() {
       </div>
 
       {showModal && <Modal closeModal={closeModal} />}
-      <CardTransaction />
-      <CardTransaction />
-      <CardTransaction />
+      <h2 className="sr-only">Accounts</h2>
+      <section>
+        <CardTransaction
+          title="Argent Bank Checking (x8349)"
+          amount="$2,082.79"
+          content="Available Balance"
+        />
+        <CardTransaction
+          title="Argent Bank Savings (x6712)"
+          amount="$10,928.42"
+          content="Available Balance"
+        />
+        <CardTransaction
+          title="Argent Bank Credit Card (x8349)"
+          amount="$184.60"
+          content="Current Balance"
+        />
+      </section>
     </main>
   );
 }

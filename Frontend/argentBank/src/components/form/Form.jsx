@@ -15,7 +15,6 @@ const Form = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Error, setError] = useState("");
-  // const [isLoading, setisLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,21 +23,17 @@ const Form = () => {
       return;
     }
 
-    // setisLoading(true);
-
     dispatch(login({ email, password })).then((response) => {
       if (response.payload) {
         navigate(`/dashboard`);
       } else {
         setError("Invalid email or password.");
       }
-      // setisLoading(false);
     });
   };
 
   return (
     <div className="sign-in-content">
-      {/* {isLoading && <div className="loading"></div>} */}
       <FontAwesomeIcon icon={faUserCircle} />
       <h1>Sign In</h1>
       <p>{Error}</p>

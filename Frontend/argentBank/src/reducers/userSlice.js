@@ -18,22 +18,23 @@ export const login = createAsyncThunk("userSlice/login", async (userData) => {
   return data.body;
 });
 
-export const getProfile = createAsyncThunk("userSlice/getProfile", async () => {
-  const token = usersSlice.getInitialState().token;
-  // console.log("test");
-  const { data } = await axios.post(
-    "http://localhost:3001/api/v1/user/profile",
-    { token },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  // console.log("data body:", data.body);
-  return data.body;
-});
+export const getProfile = createAsyncThunk(
+  "userSlice/getProfile",
+  async (token) => {
+    const { data } = await axios.post(
+      "http://localhost:3001/api/v1/user/profile",
+      { token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data.body;
+  }
+);
 
 export const setUserName = createAsyncThunk(
   "userSlice/setUserName",
