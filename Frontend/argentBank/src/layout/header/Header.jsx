@@ -1,7 +1,7 @@
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/userSlice.js";
@@ -26,10 +26,10 @@ function Header() {
 
   return (
     <nav className="main-nav">
-      <a className="main-nav-logo" href="./index.html">
+      <Link to="/" className="main-nav-logo">
         <img className="main-nav-logo-image" src="./argentBankLogo.png" />
-        <h1 className="sr-only">Argent Bank</h1>
-      </a>
+      </Link>
+      <h1 className="sr-only">Argent Bank</h1>
       <NavLink
         to="/login"
         style={({ isActive }) => (isActive ? activeStyle : undefined)}

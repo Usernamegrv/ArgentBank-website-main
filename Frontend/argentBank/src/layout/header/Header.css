@@ -14,9 +14,9 @@ span {
     margin-right: 0.5rem;
 }
 
-/* .main-nav a.router-link-exact-active {
+.main-nav a.router-link-exact-active {
     color: #42b983;
-} */
+}
 
 .main-nav-item:hover {
     text-decoration: underline;

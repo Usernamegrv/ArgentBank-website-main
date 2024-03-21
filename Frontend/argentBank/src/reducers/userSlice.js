@@ -31,7 +31,7 @@ export const getProfile = createAsyncThunk(
         },
       }
     );
-
+    sessionStorage.setItem("currentUser", JSON.stringify(data.body));
     return data.body;
   }
 );
