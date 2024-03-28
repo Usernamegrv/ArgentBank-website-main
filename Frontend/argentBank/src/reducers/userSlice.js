@@ -76,7 +76,6 @@ const usersSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.token = action.payload.token;
       sessionStorage.setItem("token", action.payload.token);
-      sessionStorage.setItem("currentUser", action.payload.currentUser);
       state.error = null;
       state.isLoggedIn = true;
     });

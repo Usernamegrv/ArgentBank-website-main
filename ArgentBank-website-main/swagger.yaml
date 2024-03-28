@@ -99,7 +99,7 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
-  /transaction/account:
+  /transaction/account/{id}:
     get:
       security:
         - Bearer: []
@@ -107,6 +107,17 @@ paths:
         - Transaction Module
       summary: Get User's Transactions
       description: API to retrieve transactions for the logged-in user
+      parameters:
+        - name: id
+          type: number
+          in: path
+          description: ID of the transaction to retrieve
+          required: true
+        - name: month
+          type: number
+          in: query
+          description: Month for filtering transactions
+          required: true
       produces:
         - application/json
       responses:
@@ -118,6 +129,8 @@ paths:
               $ref: "#/definitions/Transaction"
         "401":
           description: Unauthorized
+        "404":
+          description: Account not found
         "500":
           description: Internal Server Error
   /transaction/{id}:
@@ -143,7 +156,7 @@ paths:
             type: object
             properties:
               id:
-                type: string
+                type: number
                 description: ID of the transaction
               transaction-type:
                 type: string
@@ -238,7 +251,7 @@ definitions:
         type: object
         properties:
           id:
-            type: string
+            type: number
           email:
             type: string
   LoginResponse:
@@ -256,7 +269,7 @@ definitions:
     properties:
       # Ajoutez ici les propriétés de votre transaction
       id:
-        type: string
+        type: number
         description: Id of the transaction
       amount:
         type: number
@@ -267,6 +280,9 @@ definitions:
       date:
         type: number
         description: Date of the transaction
+      month:
+        type: integer
+        description: Month of the transaction
       description:
         type: string
         description: Description of the transaction
