@@ -13,7 +13,6 @@ function Header() {
   const currentUser = useSelector(
     (state) => state.userReducer.currentUser.userName
   );
-  console.log(currentUser);
 
   const handleLogout = () => {
     dispatch(logout());
